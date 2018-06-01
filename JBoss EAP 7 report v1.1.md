@@ -86,32 +86,32 @@ JBoss EAP 7  supports two features which ensure high availability of critical Ja
 
 ## Messaging features 
 
-###Java Messaging Service 2.0 (JMS)
+### Java Messaging Service 2.0 (JMS)
 
 JMS is a Java API that provides both point-to-point and publish-subscriber messaging styles. JMS also incorporates the use of transactions.
 
-###High Availability
+### High Availability
 
 High availability is the ability for the system to continue functioning after failure of one or more of the servers.
 A part of high availability is failover which is the ability for client connections to migrate from one server to another in event of server failure so client applications can continue to operate (Live / Backup Pairs).
 
-###Clustering
+### Clustering
 
 JBoss EAP messaging clusters allow groups of JBoss EAP messaging servers to be grouped together in order to share message processing load. Each active node in the cluster is an active JBoss EAP messaging server which manages its own messages and handles its own connections.
 
-###Backward and Forward Compatibility
+### Backward and Forward Compatibility
 
 JBoss EAP supports both backward and forward compatibility with legacy versions of JBoss EAP that were using HornetQ as their messaging brokers, such as JBoss EAP 6. These two compatibility modes are provided by the JBoss EAP built-in messaging server, ActiveMQ Artemis, that supports the HornetQ’s core protocol.
 
-###Large Messages support
+### Large Messages support
 
 JBoss EAP messaging supports large messages, even when the client or server has limited amounts of memory. Large messages can be streamed as they are, or they can be compressed further for more efficient transferral.
 
-###Flow Control (Producer flow control & Consumer flow control)
+### Flow Control (Producer flow control & Consumer flow control)
 
 Flow control can be used to limit the flow of messaging data between a client and server so that messaging participants are not overwhelmed. You can manage the flow of data from both the consumer side and the producer side.
 
-###Message Grouping
+### Message Grouping
 
 A message group is a group of messages that share certain characteristics:
 
