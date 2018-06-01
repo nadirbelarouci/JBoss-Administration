@@ -75,6 +75,15 @@ configuration, and debugging support through the echo-command argument
 # Pre-configured features: 
 
 ## High Availability Clustering features
+JBoss EAP 7  supports two features which ensure high availability of critical Java EE applications:
+
+**Load balancing** allows a service to handle a large number of requests by spreading the workload across multiple servers. A client can have timely responses from the service even in the event of a high volume of requests.
+
+**Failover allows** a client to have uninterrupted access to a service even in the event of hardware or network failures. If the service fails, another cluster member takes over the client’s requests so that it can continue processing.
+
+Clustering is a term that encompasses all of these capabilities. Members of a cluster can be configured to share workloads, referred to as load balancing, and pick up client processing in the event of a failure of another cluster member, referred to as failover.
+
+
 
 ## Messaging features 
 
