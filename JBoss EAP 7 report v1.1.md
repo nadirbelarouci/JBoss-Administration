@@ -246,6 +246,7 @@ EAP with a different configuration, use the --server-config argument. For exampl
 ### Managed Domain Configuration
 The managed domain configuration files are located in the <b>EAP_HOME/domain/configuration/</b>
 directory.
+
 Configuration File | Purpose
 --------------- | -------------- 
 domain.xml | This is the main configuration file for a managed domain. Only the domain master reads this file. This file contains the configurations for all of the profiles (default, ha, full, full-ha, load-balancer).
