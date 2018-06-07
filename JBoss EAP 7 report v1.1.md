@@ -128,10 +128,13 @@ Before we dive in the Managed domain or the Standalone Server let's define some 
 
 An extension is a module that extends the core functionality of the server. Extensions are loaded as they
 are needed by deployments, and are unloaded when they are no longer needed
+An extension register a plugin that cloud be use by application within the application server, however to be used it must be registred to the subsystem as well.
+To make it easy for you, extensions are just imports like in Java, importing something doesn't mean that you use it, but it's available for you if you need it.
+ 
 
 #### Subsystem: 
 
-A subsystem provides configuration options for a particular extension.
+A subsystem provides configuration options for a particular extension, as we said, if an extensions is an import, than you can view a Subsystem as a Instance of that import, configuring it according to your needs in order to use within some applications. 
 
 #### Profile: 
 
@@ -153,3 +156,5 @@ Concretly the Host controller is also an EAP instance which reside on its own jv
 
 but wait, does it seem that  the domain controller and the host controller are doing the same thing ? 
 tipically the domain controller is a specialized host controller which has additional responsibilities for managing the domain, while the host controller are only responsible for managing one or more EAP instances .
+
+
