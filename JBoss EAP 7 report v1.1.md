@@ -74,8 +74,9 @@ configuration, and debugging support through the echo-command argument
 
 # Pre-configured features: 
 
-## High Availability Clustering features
+## High Availability Clustering
 
+### Features 
 JBoss EAP 7  supports two features which ensure high availability of critical Java EE applications:
 
 **Load balancing** allows a service to handle a large number of requests by spreading the workload across multiple servers. A client can have timely responses from the service even in the event of a high volume of requests.
@@ -83,6 +84,42 @@ JBoss EAP 7  supports two features which ensure high availability of critical Ja
 **Failover** allows a client to have uninterrupted access to a service even in the event of hardware or network failures. If the service fails, another cluster member takes over the client’s requests so that it can continue processing.
 
 *Clustering* is a term that encompasses all of these capabilities. Members of a cluster can be configured to share workloads, referred to as load balancing, and pick up client processing in the event of a failure of another cluster member, referred to as failover.
+
+### Pre-configured options
+
+*Clustering* is made available to JBoss EAP by the **jgroups**, **infinispan**, and **modcluster** subsystems. The ha and full-ha profiles have these systems enabled, but they will only start up if an application configured as distributable is deployed on the servers.
+
+#### [JGroups](http://www.jgroups.org)
+
+**JGroups** is a toolkit for reliable messaging and can be used to create clusters whose nodes can send messages to each other. It allows you to configure named channels and protocol stacks as well as view runtime statistics for channels.
+
+- JBoss EAP is preconfigured with two JGroups stacks:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;***UDP:*** The nodes in the cluster use UDP multicasting to communicate with each other. **This is the default stack**.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;***TCP:*** The nodes in the cluster use TCP to communicate with each other.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To switch the default JGroups Channel to use TCP just execute the following management CLI command:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`/subsystem=jgroups/channel=ee:write-attribute(name=stack,value=tcp)`
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ee channel is default JGroup channel.
+
+- By default, JGroups only binds to the private network interface, which points to localhost in the default configuration. For security reasons, JGroups will not bind to the network interface defined by the -b argument specified during JBoss EAP startup, as clustering traffic should not be exposed on a public network interface.
+
+- The jgroups subsystem contains the `default`, `internal`, `oob`, and `timer` thread pools. These pools can be configured for any JGroups stack.
+
+Thread Pool Name | keepalive-time | max-threads | min-threads | queue-length 
+--------------- | -------------- | ----------- | ----------- | ------------
+default | 60000L | 300 | 20 | 100 
+internal | 60000L | 4 | 2 | 100 
+oob | 60000L | 300 | 20 | 0 
+timer | 5000L | 4 | 2 | 500 
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To configure a JGroups thread pool using the management CLI we can use the following syntax:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`/subsystem=jgroups/stack=STACK_TYPE/transport=TRANSPORT_TYPE/thread-pool=THREAD_POOL_NAME:write-attribute(name=ATTRIBUTE_NAME, value=ATTRIBUTE_VALUE)`
+
 
 ## Messaging features 
 
