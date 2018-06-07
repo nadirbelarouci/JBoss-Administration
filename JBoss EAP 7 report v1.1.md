@@ -207,22 +207,27 @@ It configured and managed independetly, application deployed to it and managed i
 In the other hand The domain mode is a mechanism that allow us to define a group of EAP instnces that are managed as a group.
 Concretly, we can identefy three parts in the domain mode: 
 
-#### The Domain Controller:
+- <b>The Domain Controller</b>
 
-The domain controller is just an EAP instance, on its own JVM, on its own machine, and yes, It's not a Standalone server, we use an other configuration file to launch the domain controller. The domain controller is the master server which responsible for coordinating host controllers which in return are responsible for coordinating one or more JBoss EAP individual server instances.
+ The domain controller is just an EAP instance, on its own JVM, on its own machine, and yes, It's not a Standalone server, we use an other configuration file to launch the domain controller. The domain controller is the master server which responsible for coordinating host controllers which in return are responsible for coordinating one or more JBoss EAP individual server instances.
 
-#### The Host Controller: 
-Concretly the Host controller is also an EAP instance which reside on its own jvm and its own machine, it is responsible for managing the life cycle and deployment for one or more JBoss EAP instances
+- <b>The Host Controller</b> 
 
-but wait, does it seem that  the domain controller and the host controller are doing the same thing ? 
+ Concretly the Host controller is also an EAP instance which reside on its own jvm and its own machine, it is responsible for managing the life cycle and deployment for one or more JBoss EAP instances
+ 
+ But wait, does it seem that  the domain controller and the host controller are doing the same thing ? 
 tipically the domain controller is a specialized host controller which has additional responsibilities for managing the domain, while the host controller are only responsible for managing one or more EAP instances .
 
-The domain controller never talks directely to the EAP instance, it must communicate first to the host controller (kind of a proxy).
+ The domain controller never talks directely to the EAP instance, it must communicate first to the host controller (kind of a proxy).
 
+- <b>The Server group </b>
+
+ A server group is just a group of EAP instances, each EAP instance must belogn to a server group, and a server group can contain EAP instances which are managed by different host controllers .
+ 
 So, what is the difference between standalone and domain mode ? 
 None, standalone server and instances in the domain mode offers the same features, you can do the same in either of them, however, we see the difference in how to manage each mode, the standalone is managed independetly while the domain mode manage a group of EAP instances at once! 
 
-### Standalone Server Configuration Files
+### Standalone Server Configuration 
 The standalone configuration files are located in the EAP_HOME/standalone/configuration/
 directory. A separate file exists for each of the five predefined profiles (default, ha, full, full-ha, loadbalancer).
 
@@ -236,5 +241,25 @@ standalone-load-balancer.xml | This standalone configuration file includes the m
 
 
 By default, starting JBoss EAP as a standalone server uses the standalone.xml file. To start JBoss
-EAP with a different configuration, use the --server-config argument. For example,
-$ EAP_HOME/bin/standalone.sh --server-config=standalone-full.xml
+EAP with a different configuration, use the --server-config argument. For example:
+
+`$ EAP_HOME/bin/standalone.sh --server-config=standalone-full.xml`
+
+
+### Managed Domain Configuration
+The managed domain configuration files are located in the <b>EAP_HOME/domain/configuration/</b>
+directory.
+Configuration File | Purpose
+--------------- | -------------- 
+domain.xml | This is the main configuration file for a managed domain. Only the domain master reads this file. This file contains the configurations for all of the profiles (default, ha, full, full-ha, load-balancer).
+host.xml | This file includes configuration details specific to a physical host in a managed domain, such as network interfaces, socket bindings, the name of the host, and other host-specific details. The host.xml file includes all of the features of both host-master.xml and host-slave.xml, which are described below.
+host-master.xml | This file includes only the configuration details necessary to run a server as the master domain controller
+host-slave.xml | This file includes only the configuration details necessary to run a server as a managed domain host controller.
+
+By default, starting JBoss EAP in a managed domain uses the host.xml file. To start JBoss EAP with a
+different configuration, use the --host-config argument. For example,
+
+`$ EAP_HOME/bin/domain.sh --host-config=host-master.xml`
+
+
+
