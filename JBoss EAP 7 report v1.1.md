@@ -55,7 +55,7 @@ setup is also greatly enhanced.
 
 # New Features and Enhancements in JBoss EAP 7.1
 
-- <b>Elytron<b>
+- <b>Elytron</b>
 
 Elytron, based on the WildFly Elytron project, is the new security framework in JBoss EAP 7.1. It is
 designed to unify security across the entire application server.
