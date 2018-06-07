@@ -121,3 +121,35 @@ A message group is a group of messages that share certain characteristics:
 ## Distrubted Cache features 
 
 # Managed domain vs standalone server 
+
+Before we dive in the Managed domain or the Standalone Server let's define some terms: 
+
+#### Extentions: 
+
+An extension is a module that extends the core functionality of the server. Extensions are loaded as they
+are needed by deployments, and are unloaded when they are no longer needed
+
+#### Subsystem: 
+
+A subsystem provides configuration options for a particular extension.
+
+#### Profile: 
+
+A collection of subsystem configurations makes up a profile, which is configured to satisfy the needs for
+the server.
+
+Now, JBoss EAP can be runned as a Standalone server or as a Managed domain
+The Standalone server is just a signle instance of JBoss EAP on its own JVM  on a paricular machine
+It configured and managed independetly, application deployed to it and managed independetly, a group of Standalone server instances can be coordianted such that provide a cluster envirnement.
+In the other hand The domain mode is a mechanism that allow us to define a group of EAP instnces that are managed as a group.
+Concretly, we can identefy three parts in the domain mode: 
+
+#### The Domain Controller:
+
+The domain controller is just an EAP instance, on its own JVM, on its own machine, and yes, It's not a Standalone server, we use an other configuration file to launch the domain controller. The domain controller is the master server which responsible for coordinating host controllers which in return are responsible for coordinating one or more JBoss EAP individual server instances.
+
+#### The Host Controller: 
+Concretly the Host controller is also an EAP instance which reside on its own jvm and its own machine, it is responsible for managing the life cycle and deployment for one or more JBoss EAP instances
+
+but wait, does it seem that  the domain controller and the host controller are doing the same thing ? 
+tipically the domain controller is a specialized host controller which has additional responsibilities for managing the domain, while the host controller are only responsible for managing one or more EAP instances .
