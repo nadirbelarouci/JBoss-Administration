@@ -2,77 +2,76 @@
 
 JBoss EAP 7 includes some notable upgrades and improvements over the previous release.
 
-## Java EE 7
+- <b>Java EE 7</b>
 
 JBoss EAP 7 is a certified implementation of Java EE 7, meeting both the Web Profile and the full
 platform specifications. It also includes support for the latest iterations of CDI 1.2 and Web Sockets 1.1.
 
-## Undertow
+- <b>Undertow</b>
 
 Undertow is the new lightweight, flexible, and performant web server included in JBoss EAP 7,
 replacing JBoss Web. Written in Java, it is designed for maximum throughput and scalability. It
 supports the latest web technologies, such as the new HTTP/2 standard.
 
-## Apache ActiveMQ Artemis
+- <b>Apache ActiveMQ Artemis</b>
 
 Apache ActiveMQ Artemis is the new JBoss EAP 7 built-in messaging provider. Based on a code
 donation from HornetQ, this Apache subproject provides outstanding performance based on a
 proven non-blocking architecture.
 
-## IronJacamar 1.2
+- <b>IronJacamar 1.2</b>
 
 The latest IronJacamar provides a stable and feature rich support for JCA and DataSources.
 
-## JBossWS 5
+- <b>JBossWS 5</b>
 
 The fifth generation of JBossWS is a major leap forward, bringing new features and performance
 improvements to JBoss EAP 7 web services.
 
-## RESTEasy 3
+- <b>RESTEasy 3</b>
 
 JBoss EAP 7 includes the latest generation of RESTEasy. It goes beyond the standard Java EE
 REST APIs (JAX-RS 2.0) by providing a number of useful extensions such as JSON Web Encryption,
 Jackson, JSON-P, and Jettison.
 
-## OpenJDK ORB
+- <b>OpenJDK ORB</b>
 JBoss EAP 7 replaced the JacORB IIOP implementation with a downstream branch of the OpenJDK
 ORB, leading to better interoperability with the JVM ORB and the Java EE RI.
 
-##Feature Rich Clustering
+- <b>Feature Rich Clustering</b>
 
 Clustering support was heavily refactored in JBoss EAP 7 and includes several public APIs for
 access by applications.
 
-## Port Reduction
+- <b>Port Reduction</b>
 By utilizing HTTP upgrade, JBoss EAP 7 has moved nearly all of its protocols to be multiplexed over
 just two HTTP ports: a management port (9990), and an application port (8080).
 
-## Enhanced Logging
+- <b>Enhanced Logging</b>
 The management API now supports the ability to list and view the available log files on a server, or
 even define custom formatters other than the default pattern formatter. Deployment’s logging
 setup is also greatly enhanced.
-For a complete list of new features introduced in JBoss EAP 7.0, see New Features and Enhancements
-in the JBoss EAP 7.0.0 Release Notes.
+
 
 # New Features and Enhancements in JBoss EAP 7.1
 
-## Elytron
+- <b>Elytron<b>
 
 Elytron, based on the WildFly Elytron project, is the new security framework in JBoss EAP 7.1. It is
 designed to unify security across the entire application server.
 
-## Management Console
+- <b>Management Console</b>
 
 The management console has been improved to provide the ability to configure more subsystems,
 provide enhanced transaction subsystem and transaction resource metrics, and manage many
 additional configurations.
 
-## Management CLI
+- <b>Management CLI</b>
 
 The management CLI provides enhanced support for response and file attachments, module
 configuration, and debugging support through the echo-command argument
 
-# Pre-configured features: 
+# Pre-configured options in JBOSS EAP 7: 
 
 ## High Availability Clustering
 
@@ -120,7 +119,7 @@ timer | 5000L | 4 | 2 | 500
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`/subsystem=jgroups/stack=STACK_TYPE/transport=TRANSPORT_TYPE/thread-pool=THREAD_POOL_NAME:write-attribute(name=ATTRIBUTE_NAME, value=ATTRIBUTE_VALUE)`
 
-### [Infinispan](http://infinispan.org)
+#### [Infinispan](http://infinispan.org)
 
 **Infinispan** is a Java data grid platform that provides a JCACHE(Java Temporary Caching API)-compatible cache interface for managing cached data. The **infinispan** subsystem provides caching support for JBoss EAP. When using a configuration that provides high availability capabilities, the **infinispan** subsystem provides caching, state replication, and state distribution support. In non-high-availability configurations, the **infinispan** subsystem provides local caching support.
 
@@ -179,32 +178,30 @@ A message group is a group of messages that share certain characteristics:
 - All messages in a message group are grouped under a common group id.
 - All messages in a message group are serially processed and consumed by the same consumer.
 
-# Managed domain vs standalone server 
+## Managed domain vs standalone server 
 
 Before we dive in the Managed domain or the Standalone Server let's define some terms: 
 
-#### Extentions: 
+- <b>Extentions</b>
 
-An extension is a module that extends the core functionality of the server. Extensions are loaded as they
+ An extension is a module that extends the core functionality of the server. Extensions are loaded as they
 are needed by deployments, and are unloaded when they are no longer needed
-An extension register a plugin that cloud be use by application within the application server, however to be used it must be registred to the subsystem as well.
-To make it easy for you, extensions are just imports like in Java, importing something doesn't mean that you use it, but it's available for you if you need it.
+ An extension register a plugin that cloud be use by application within the application server, however to be used it must be registred to the subsystem as well.
+ To make it easy for you, extensions are just imports like in Java, importing something doesn't mean that you use it, but it's available for you if you need it.
  
 
-#### Subsystem: 
+- <b>Subsystem</b>
 
-A subsystem provides configuration options for a particular extension, as we said, if an extensions is an import, than you can view a Subsystem as a Instance of that import, configuring it according to your needs in order to use within some applications. 
+ A subsystem provides configuration options for a particular extension, as we said, if an extensions is an import, than you can view a Subsystem as a Instance of that import, configuring it according to your needs in order to use within some applications. 
 
-#### Profile: 
+- <b>Profile</b>
 
-
-A collection of subsystem configurations makes up a profile, which is configured to satisfy the needs for
+ A collection of subsystem configurations makes up a profile, which is configured to satisfy the needs for
 the server.
 
-Now, JBoss EAP can be runned as a Standalone server or as a Managed domain
-The Standalone server is just a signle instance of JBoss EAP on its own JVM  on a paricular machine
-It configured and managed independetly, application deployed to it and managed independetly, a group of Standalone server instances can be coordianted such that provide a cluster envirnement.
-In the other hand The domain mode is a mechanism that allow us to define a group of EAP instnces that are managed as a group.
+ JBoss EAP can be runned as a Standalone server or as a Managed domain.
+ The Standalone server is just a signle instance of JBoss EAP on its own JVM  on a paricular machine, it configured and managed independetly, application deployed to it and managed independetly, a group of Standalone server instances can be coordianted such that provide a cluster envirnement.
+ In the other hand The domain mode is a mechanism that allow us to define a group of EAP instnces that are managed as a group.
 Concretly, we can identefy three parts in the domain mode: 
 
 - <b>The Domain Controller</b>
@@ -224,8 +221,8 @@ tipically the domain controller is a specialized host controller which has addit
 
  A server group is just a group of EAP instances, each EAP instance must belogn to a server group, and a server group can contain EAP instances which are managed by different host controllers .
  
-So, what is the difference between standalone and domain mode ? 
-None, standalone server and instances in the domain mode offers the same features, you can do the same in either of them, however, we see the difference in how to manage each mode, the standalone is managed independetly while the domain mode manage a group of EAP instances at once! 
+So, <b>what is the difference between standalone and domain mode ? </b>
+ None, standalone server and instances in the domain mode offers the same features, you can do the same in either of them, however, we see the difference in how to manage each mode, the standalone is managed independetly while the domain mode manage a group of EAP instances at once! 
 
 ### Standalone Server Configuration 
 The standalone configuration files are located in the EAP_HOME/standalone/configuration/
