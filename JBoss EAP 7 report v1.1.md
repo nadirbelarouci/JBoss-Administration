@@ -197,6 +197,7 @@ A subsystem provides configuration options for a particular extension, as we sai
 
 #### Profile: 
 
+
 A collection of subsystem configurations makes up a profile, which is configured to satisfy the needs for
 the server.
 
@@ -216,4 +217,24 @@ Concretly the Host controller is also an EAP instance which reside on its own jv
 but wait, does it seem that  the domain controller and the host controller are doing the same thing ? 
 tipically the domain controller is a specialized host controller which has additional responsibilities for managing the domain, while the host controller are only responsible for managing one or more EAP instances .
 
+The domain controller never talks directely to the EAP instance, it must communicate first to the host controller (kind of a proxy).
 
+So, what is the difference between standalone and domain mode ? 
+None, standalone server and instances in the domain mode offers the same features, you can do the same in either of them, however, we see the difference in how to manage each mode, the standalone is managed independetly while the domain mode manage a group of EAP instances at once! 
+
+### Standalone Server Configuration Files
+The standalone configuration files are located in the EAP_HOME/standalone/configuration/
+directory. A separate file exists for each of the five predefined profiles (default, ha, full, full-ha, loadbalancer).
+
+Configuration File | Purpose
+--------------- | -------------- 
+standalone.xml | This standalone configuration file is the default configuration that is used when you start your standalone server. It contains all information about the server, including subsystems, networking, deployments, socket bindings, and other configurable details. It does not provide the subsystems necessary for messaging or high availability.
+standalone-ha.xml | This standalone configuration file includes all of the default subsystems and adds the modcluster and jgroups subsystems for high availability. It does not provide the subsystems necessary for messaging.
+standalone-full.xml | This standalone configuration file includes all of the default subsystems and adds the messaging-activemq and iiop-openjdk subsystems. It does not provide the subsystems necessary for high availability.
+standalone-full-ha.xml | This standalone configuration file includes support for every possible subsystem, including those for messaging and high availability
+standalone-load-balancer.xml | This standalone configuration file includes the minimum subsystems necessary to use the built-in mod_cluster front-end load balancer to load balance other JBoss EAP instances.
+
+
+By default, starting JBoss EAP as a standalone server uses the standalone.xml file. To start JBoss
+EAP with a different configuration, use the --server-config argument. For example,
+$ EAP_HOME/bin/standalone.sh --server-config=standalone-full.xml
