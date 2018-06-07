@@ -120,6 +120,30 @@ timer | 5000L | 4 | 2 | 500
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`/subsystem=jgroups/stack=STACK_TYPE/transport=TRANSPORT_TYPE/thread-pool=THREAD_POOL_NAME:write-attribute(name=ATTRIBUTE_NAME, value=ATTRIBUTE_VALUE)`
 
+### [Infinispan](http://infinispan.org)
+
+**Infinispan** is a Java data grid platform that provides a JCACHE(Java Temporary Caching API)-compatible cache interface for managing cached data. The **infinispan** subsystem provides caching support for JBoss EAP. When using a configuration that provides high availability capabilities, the **infinispan** subsystem provides caching, state replication, and state distribution support. In non-high-availability configurations, the **infinispan** subsystem provides local caching support.
+
+- Cache Containers : A cache container is a repository for the caches used by a subsystem. Each cache container defines a default cache to be used. JBoss EAP 7 defines 4 default Infinispan cache containers:
+
+Cache container | Used for | default cache
+--- | --- | ---
+server | singleton caching | replicated cache
+web | web session clustering | distributed cache
+ejb | stateful session bean clustering | distributed cache
+hibernate | entity caching | local cache for new entity & invalidation cache for updated entity & replicated-cache for last update timestamp for each table [more details](https://mindmajix.com/jboss/configuring-hibernate-cache)
+
+Additional caches and cache containers can be added.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Cache modes:**
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Replicated:* Entries written to a replicated cache on any node will be replicated to all other nodes in the cluster, and can be retrieved locally from any node.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Distributed:* Distribution tries to keep a fixed number of copies of any entry in the cache, configured as numOwners. This allows the cache to scale linearly, storing more data as nodes are added to the cluster.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Invalidation mode:* In invalidation, the caches on different nodes do not actually share any data. Instead, when a key is written to, the cache only aims to remove data that may be stale from other nodes.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Synchronous and Asynchronous Replication:* With asynchronous communications, the originator node does not receive any acknowledgement from the other nodes about the status of the operation.
 
 ## Messaging features 
 
@@ -154,8 +178,6 @@ A message group is a group of messages that share certain characteristics:
 
 - All messages in a message group are grouped under a common group id.
 - All messages in a message group are serially processed and consumed by the same consumer.
-
-## Distrubted Cache features 
 
 # Managed domain vs standalone server 
 
